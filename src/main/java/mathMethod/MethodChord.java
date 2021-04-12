@@ -23,15 +23,11 @@ public class MethodChord {
     }
 
     /**
-     * Считает производную второго порядка функции с номером number
+     * Считает производную первого порядка функции с номером number
      *
      * @param x - аргумент
      * @return значение производной второго порядка
      */
-    private double secondDerivative(double x) {
-        return Function.getSecondDerivative(number, x);
-    }
-
     private double firstDerivative(double x) {
         return Function.getFirstDerivative(number, x);
     }
@@ -43,11 +39,10 @@ public class MethodChord {
      * @param a       - левый конец отрезка
      * @param b       - правый конец отрезка
      */
-    public void findRoot(double epsilon, double a, double b) {
-        System.out.println("МЕТОД ХОРД:");
+    public ResultInfo findRoot(double epsilon, double a, double b) {
         List<double[]> table = new ArrayList<>();
         int iter = 0;
-        if(!checkConvergence(a, b)) return;
+        if(!checkConvergence(a, b)) return null;
         double xi = a - (b-a)*f(a)/(f(b)-f(a));
         double previousX = xi;
         while (true) {
@@ -63,32 +58,41 @@ public class MethodChord {
                 if(Math.abs(xi - previousX) <= epsilon || Math.abs(f(xi)) <= epsilon) break;
                 previousX = xi;
             } else {
-                System.out.println("Количество решений достигло 1000, решений не найдено");
-                return;
+               Exception.exp = 2;
+                return null;
             }
         }
-        System.out.printf("Количество итераций: %d\n", iter);
-        System.out.println("Корень уравнения: " + xi);
-        showTable(table);
-
+        return new ResultInfo(xi, iter, table);
     }
 
+
+    /**
+     * Проверяет условие сходиости
+     * @param a - левый конец отрезка
+     * @param b - правый конец отрезка
+     * @return true - если условие сходимости выполняется, falsе - если нет
+     */
     public boolean checkConvergence(double a, double b) {
         if(Checker.checkExistenceRoot(a,b, number) && checkDerivative(a,b)) return true;
         else {
-            System.out.println("Условие сходимости не выполняется");
             return false;
         }
 
     }
 
+    /**
+     * Проверка функции на монотонность
+     * @param a - левый конец
+     * @param b - правый конец
+     * @return true - функция монотонная, false - если не монотонна
+     */
     private boolean checkDerivative(double a, double b) {
         double step = (b - a) / 10;
         while (a < b) {
             if (firstDerivative(a) * firstDerivative(a + step) > 0) {
                 a += step;
             } else {
-                System.out.printf("Производная меняет знак на промежутке [%f,%f]\n", a, a + step);
+               Exception.exp = 1;
                 return false;
             }
         }
@@ -97,10 +101,9 @@ public class MethodChord {
 
     /**
      * Выводит таблицу уточнения корня методом хорд
-     *
      * @param table
      */
-    private void showTable(List<double[]> table) {
+    public static void showTable(List<double[]> table) {
         int iter = 0;
         String[] heading = {"№ итерации", "a", "b", "x", "f(a)", "f(b)", "f(x)", "|x(i+1)-x(i)|"};
         for (String name : heading) {

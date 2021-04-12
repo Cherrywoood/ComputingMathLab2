@@ -1,8 +1,8 @@
+import functions.Function;
 import functions.FunctionInfo;
 import input.ConsoleInput;
-import mathMethod.MethodChord;
-import mathMethod.MethodNewton;
-import mathMethod.MethodSimpleIteration;
+import mathMethod.*;
+import mathMethod.Exception;
 
 public class Main {
     public static void main(String... arg) {
@@ -14,11 +14,34 @@ public class Main {
 
 
         if (number <= 3) {
-            new MethodChord(number).findRoot(epsilon, a, b);
-            new MethodSimpleIteration(number).findRoot(epsilon, a, b);
+            System.out.println("МЕТОД ХОРД:");
+            MethodChord methodChord = new MethodChord(number);
+            ResultInfo resultInfo = methodChord.findRoot(epsilon,a,b);
+            if(resultInfo != null) {
+                MethodChord.showTable(resultInfo.getTable());
+                System.out.println("Корень уравнения: " + resultInfo.getX());
+            } else {
+                Exception.outputExp();
+            }
+            System.out.println();
+            System.out.println("МЕТОД ПРОСТЫХ ИТЕРАЦИЙ");
+            MethodSimpleIteration methodSimpleIteration =  new MethodSimpleIteration(number);
+            resultInfo = methodSimpleIteration.findRoot(epsilon,a,b);
+            if(resultInfo != null) {
+                MethodSimpleIteration.showTable(resultInfo.getTable());
+                System.out.println("Корень уравнения: " + resultInfo.getX());
+            }  else {
+                Exception.outputExp();
+            }
         } else {
-            new MethodNewton(number).findRoots(epsilon, a, b);
-            new MethodNewton(number).findRoots2(epsilon, a, b);
+           MethodNewton methodNewton =  new MethodNewton(number);
+           ResultInfoSystem resultInfoSystem = methodNewton.findRoots(epsilon, a, b);
+            if(resultInfoSystem != null) {
+                MethodSimpleIteration.showTable(resultInfoSystem.getTable());
+                System.out.println("Корни уравнения: x1 = " + resultInfoSystem.getX1() + " x2 = " + resultInfoSystem.getX2());
+            }  else {
+                Exception.outputExp();
+            }
         }
 
     }

@@ -15,7 +15,7 @@ public class Function {
             case 2:
                 return Math.pow(Math.E,2*x)+3*x-4;
             case 3:
-                return Math.sin(3*x)/x;
+                return Math.sin(x) + 0.1*Math.pow(x,2);
             default: return 0;
         }
     }
@@ -33,7 +33,7 @@ public class Function {
             case 2:
                 return 2*Math.pow(Math.E,2*x)+3;
             case 3:
-                return  3*Math.cos(3*x)/x - Math.sin(3*x)/Math.pow(x,2);
+                return  Math.cos(x) + 0.2 * x;
             default: return 0;
         }
     }
@@ -51,7 +51,7 @@ public class Function {
             case 2:
                 return 4*Math.pow(Math.E,2*x);
             case 3:
-                return -9*Math.sin(3*x)/x - 6*Math.cos(3*x)/Math.pow(x,2) + 2*Math.sin(3*x)/Math.pow(x,3);
+                return -Math.sin(x) + 0.2;
             default: return 0;
         }
     }
@@ -63,7 +63,7 @@ public class Function {
             case 2:
                 return "e^(2x)+0.5x+1.5";
             case 3:
-                return "sin(3x)/x";
+                return "sin(x) + 0.1x^2";
             default: return "";
         }
     }

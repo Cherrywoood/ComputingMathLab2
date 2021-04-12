@@ -59,6 +59,7 @@ public class FunctionGraph {
         JFrame jf = new JFrame();
         jf.setContentPane(new ChartPanel(chart));
         jf.pack();
+        jf.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         jf.setVisible(true);
     }
 
@@ -114,6 +115,7 @@ public class FunctionGraph {
         JFrame jf = new JFrame();
         jf.setContentPane(new ChartPanel(chart));
         jf.pack();
+        jf.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         jf.setVisible(true);
     }
 }
